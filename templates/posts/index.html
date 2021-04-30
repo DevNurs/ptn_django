@@ -4,12 +4,16 @@
 <div class="container">
     <div class="card mb-3">
         <div class="card-body">
-            <a href="{% url 'detail_data' post.id %}">
+            <a style="text-decoration: none; color: black" href="{% url 'detail_data' post.id %}">
                 <h5 class="card-title">{{ post.title }}</h5>
             </a>
+            {% if post.image %}
             <img src="{{ post.image.url }}" class="card-img-top" style="width: 100px; height: 100px">
-            <p class="card-text">{{ post.description }}</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            {% else %}
+            <img src="..." class="card-img-top" style="width: 100px; height: 100px">
+            {% endif %}
+            <p class="card-text">{{ post.description|truncatewords:40 }}</p>
+            <p class="card-text"><small class="text-muted">{{ post.create_at }}</small></p>
         </div>
     </div>
 </div>
