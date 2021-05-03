@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post
+from comments.models import Comment
 
 
 def index(request):
@@ -16,13 +17,17 @@ def post_data(request):
         title = request.POST.get('title')
         description = request.POST.get('description')
         file = request.FILES.get('file')
-        post_obj = Post.objects.create(title=title, description=description, image=file)
+        post_obj = Post.objects.create(user=request.user, title=title, description=description, image=file)
         return redirect('data')
     return render(request, 'posts/create.html')
 
 
 def detail_data(request, id):
     posts = Post.objects.get(id=id)
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        comment_obj = Comment.objects.create(user=request.user, post=posts, text=text)
+        return redirect('detail_data', posts.id)
     return render(request, 'posts/detail.html', {"posts": posts})
 
 

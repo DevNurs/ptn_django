@@ -4,16 +4,40 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">{{ posts.title }}</h5>
+            {% if posts.image %}
             <img src="{{ posts.image.url }}" class="card-img-top" style="width: 400px; height: 400px">
+            {% else %}
+            <img src="..." class="card-img-top" style="width: 400px; height: 400px">
+            {% endif %}
             <p class="card-text">{{ posts.description }}</p>
             <p class="card-text"><small class="text-muted">{{ posts.create_at }}</small></p>
+            <p class="card-text"><small class="text-muted">{{ posts.user }}</small></p>
+            {% for comment in posts.comment.all %}
+                <div class="container">
+                    <p class="card-text">{{ comment.text }}</p>
+                    <p class="card-text"><small class="text-muted">{{ comment.user }}</small></p>
+                </div>
+                <br>
+            {% endfor %}
         </div>
     </div>
+    <div class="container">
+        <form method="post" action="{% url 'detail_data' posts.id %}">
+            {% csrf_token %}
+            <div class="form-floating">
+            <textarea name="text" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                      style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Comments</label>
+                <button type="submit" class="btn btn-success">Comment</button>
+            </div>
+        </form>
+    </div>
+    <br>
     <a href="{% url 'update_data' posts.id %}">
-            <button class="btn btn-success" type="submit">Update</button>
+        <button class="btn btn-success" type="submit">Update</button>
     </a>
     <a href="{% url 'delete_data' posts.id %}">
-            <button class="btn btn-danger" type="submit">Delete</button>
+        <button class="btn btn-danger" type="submit">Delete</button>
     </a>
 </div>
 {% endblock %}

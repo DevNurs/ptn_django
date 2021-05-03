@@ -14,6 +14,8 @@
             {% endif %}
             <p class="card-text">{{ post.description|truncatewords:40 }}</p>
             <p class="card-text"><small class="text-muted">{{ post.create_at }}</small></p>
+            <br>
+            <p class="card-text"><small class="text-muted">{{ post.user }}</small></p>
         </div>
     </div>
 </div>
