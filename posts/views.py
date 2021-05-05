@@ -4,7 +4,8 @@ from comments.models import Comment
 
 
 def index(request):
-    return render(request, 'base.html')
+    posts = Post.objects.all()[:4]
+    return render(request, 'index.html', {'posts': posts})
 
 
 def get_data(request):
@@ -18,7 +19,7 @@ def post_data(request):
         description = request.POST.get('description')
         file = request.FILES.get('file')
         post_obj = Post.objects.create(user=request.user, title=title, description=description, image=file)
-        return redirect('data')
+        return redirect('index')
     return render(request, 'posts/create.html')
 
 
