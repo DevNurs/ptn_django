@@ -1,43 +1,196 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
+{% load static %}
 {% block content %}
-<div class="container">
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">{{ posts.title }}</h5>
-            {% if posts.image %}
-            <img src="{{ posts.image.url }}" class="card-img-top" style="width: 400px; height: 400px">
-            {% else %}
-            <img src="..." class="card-img-top" style="width: 400px; height: 400px">
-            {% endif %}
-            <p class="card-text">{{ posts.description }}</p>
-            <p class="card-text"><small class="text-muted">{{ posts.create_at }}</small></p>
-            <p class="card-text"><small class="text-muted">{{ posts.user }}</small></p>
-            {% for comment in posts.comment.all %}
-                <div class="container">
-                    <p class="card-text">{{ comment.text }}</p>
-                    <p class="card-text"><small class="text-muted">{{ comment.user }}</small></p>
+    <div class="col-lg-8">
+        <div class="main_blog_details">
+            <img class="img-fluid" src="{{ posts.image.url }}" alt="">
+            <h4>{{ posts.title }}</h4>
+            <div class="user_details">
+                <div class="float-left">
+                    <a href="#">Lifestyle</a>
+                    <a href="#">Gadget</a>
                 </div>
-                <br>
-            {% endfor %}
+                <div class="float-right">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>{{ posts.user }}</h5>
+                            <p>{{ posts.crate_at }}</p>
+                        </div>
+                        <div class="d-flex">
+                            <img src="{% static 'img/blog/user-img.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>{{ posts.description }}</p>
+            <div class="news_d_footer">
+                <a href="#"><i class="lnr lnr lnr-heart"></i>Lily and 4 people like this</a>
+                <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>06
+                    Comments</a>
+                <div class="news_socail ml-auto">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                    <a href="#"><i class="fa fa-rss"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="navigation-area">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                    </div>
+                    <div class="detials">
+                        <p>Prev Post</p>
+                        <a href="#">
+                            <h4>A Discount Toner</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                    <div class="detials">
+                        <p>Next Post</p>
+                        <a href="#">
+                            <h4>Cartridge Is Better</h4>
+                        </a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                    </div>
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comments-area">
+            <h4>05 Comments</h4>
+            <div class="comment-list">
+                <div class="single-comment justify-content-between d-flex">
+                    <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                            <img src="img/blog/c1.jpg" alt="">
+                        </div>
+                        <div class="desc">
+                            <h5><a href="#">Emilly Blunt</a></h5>
+                            <p class="date">December 4, 2017 at 3:12 pm </p>
+                            <p class="comment">
+                                Never say goodbye till the end comes!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reply-btn">
+                        <a href="" class="btn-reply text-uppercase">reply</a>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-list left-padding">
+                <div class="single-comment justify-content-between d-flex">
+                    <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                            <img src="img/blog/c2.jpg" alt="">
+                        </div>
+                        <div class="desc">
+                            <h5><a href="#">Elsie Cunningham</a></h5>
+                            <p class="date">December 4, 2017 at 3:12 pm </p>
+                            <p class="comment">
+                                Never say goodbye till the end comes!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reply-btn">
+                        <a href="" class="btn-reply text-uppercase">reply</a>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-list left-padding">
+                <div class="single-comment justify-content-between d-flex">
+                    <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                            <img src="img/blog/c3.jpg" alt="">
+                        </div>
+                        <div class="desc">
+                            <h5><a href="#">Annie Stephens</a></h5>
+                            <p class="date">December 4, 2017 at 3:12 pm </p>
+                            <p class="comment">
+                                Never say goodbye till the end comes!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reply-btn">
+                        <a href="" class="btn-reply text-uppercase">reply</a>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-list">
+                <div class="single-comment justify-content-between d-flex">
+                    <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                            <img src="img/blog/c4.jpg" alt="">
+                        </div>
+                        <div class="desc">
+                            <h5><a href="#">Maria Luna</a></h5>
+                            <p class="date">December 4, 2017 at 3:12 pm </p>
+                            <p class="comment">
+                                Never say goodbye till the end comes!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reply-btn">
+                        <a href="" class="btn-reply text-uppercase">reply</a>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-list">
+                <div class="single-comment justify-content-between d-flex">
+                    <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                            <img src="img/blog/c5.jpg" alt="">
+                        </div>
+                        <div class="desc">
+                            <h5><a href="#">Ina Hayes</a></h5>
+                            <p class="date">December 4, 2017 at 3:12 pm </p>
+                            <p class="comment">
+                                Never say goodbye till the end comes!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reply-btn">
+                        <a href="" class="btn-reply text-uppercase">reply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-form">
+            <h4>Leave a Reply</h4>
+            <form>
+                <div class="form-group form-inline">
+                    <div class="form-group col-lg-6 col-md-6 name">
+                        <input type="text" class="form-control" id="name" placeholder="Enter Name"
+                               onfocus="this.placeholder = ''"
+                               onblur="this.placeholder = 'Enter Name'">
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 email">
+                        <input type="email" class="form-control" id="email" placeholder="Enter email address"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="subject" placeholder="Subject"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = 'Subject'">
+                </div>
+                <div class="form-group">
+                                <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege"
+                                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                                          required=""></textarea>
+                </div>
+                <a href="#" class="primary-btn submit_btn text-uppercase">Send Message</a>
+            </form>
         </div>
     </div>
-    <div class="container">
-        <form method="post" action="{% url 'detail_data' posts.id %}">
-            {% csrf_token %}
-            <div class="form-floating">
-            <textarea name="text" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                      style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Comments</label>
-                <button type="submit" class="btn btn-success">Comment</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <a href="{% url 'update_data' posts.id %}">
-        <button class="btn btn-success" type="submit">Update</button>
-    </a>
-    <a href="{% url 'delete_data' posts.id %}">
-        <button class="btn btn-danger" type="submit">Delete</button>
-    </a>
-</div>
 {% endblock %}

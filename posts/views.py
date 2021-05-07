@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import Post
 from comments.models import Comment
-
-
-def index(request):
-    posts = Post.objects.all()[:4]
-    return render(request, 'index.html', {'posts': posts})
+from django.db.models import Q
 
 
 def get_data(request):
-    posts = Post.objects.all()
+    if 'key_word' in request.GET:
+        key = request.GET.get('words')
+        posts = Post.objects.filter(Q(title__icontains=key) | Q(description__icontains=key) |
+                                    Q(user__username__icontains=key))
+    else:
+        posts = Post.objects.all()
     return render(request, 'posts/index.html', {'posts': posts})
 
 

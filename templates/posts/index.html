@@ -1,24 +1,22 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block content %}
-{% for post in posts %}
-<div class="container">
-    <div class="card mb-3">
-        <div class="card-body">
-            <a style="text-decoration: none; color: black" href="{% url 'detail_data' post.id %}">
-                <h5 class="card-title">{{ post.title }}</h5>
-            </a>
-            {% if post.image %}
-            <img src="{{ post.image.url }}" class="card-img-top" style="width: 100px; height: 100px">
-            {% else %}
-            <img src="..." class="card-img-top" style="width: 100px; height: 100px">
-            {% endif %}
-            <p class="card-text">{{ post.description|truncatewords:40 }}</p>
-            <p class="card-text"><small class="text-muted">{{ post.create_at }}</small></p>
-            <br>
-            <p class="card-text"><small class="text-muted">{{ post.user }}</small></p>
+    {% for post in  posts %}
+        <div class="col-lg-6 col-md-6">
+            <div class="single-post-item">
+                <div class="post-thumb">
+                    <img class="img-fluid" src="{{ post.image.url }}" alt="">
+                </div>
+                <div class="post-details">
+                    <h4><a href="{% url 'detail_data' post.id %}">{{ post.title }}</a></h4>
+                    <p>{{ post.description|truncatewords:10 }}</p>
+                    <div class="blog-meta">
+                        <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>{{ post.create_at }}</a>
+                        <a href="#" class="m-gap"><span
+                                class="lnr lnr-bubble"></span><span>{{ post.comment.count }}</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-{% endfor %}
+    {% endfor %}
 {% endblock %}
