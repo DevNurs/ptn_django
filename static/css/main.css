@@ -1606,7 +1606,7 @@ h6 {
       display: none; } }
 
 #header.header-scrolled {
-  background: #7c32ff;
+  background: red;
   transition: all 0.5s;
   margin-top: 0; }
   #header.header-scrolled .nav-menu a {

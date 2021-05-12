@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post
+from tags.models import Tag
 from comments.models import Comment
 from django.db.models import Q
 
@@ -19,8 +20,16 @@ def post_data(request):
         title = request.POST.get('title')
         description = request.POST.get('description')
         file = request.FILES.get('file')
+        tags = request.POST.get('tags')
         post_obj = Post.objects.create(user=request.user, title=title, description=description, image=file)
-        return redirect('index')
+        if len(tags) != 0:
+            try:
+                tags_get = Tag.objects.get(title=tags)
+                tags_get.posts.add(post_obj)
+            except:
+                tags_obj = Tag.objects.create(title=tags)
+                tags_obj.posts.add(post_obj)
+        return redirect("data")
     return render(request, 'posts/create.html')
 
 
