@@ -25,8 +25,15 @@
             </div>
             <p>{{ posts.description }}</p>
             <div class="news_d_footer">
-                <a href="#"><i class="lnr lnr lnr-heart"></i>Lily and 4 people like this</a>
-                <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>06
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="like">
+                    <button type="submit">
+                        <i class="lnr lnr lnr-heart"></i>{{ posts.likes_post.all.count }} people like this
+                    </button>
+                </form>
+                <a class="justify-content-center ml-auto" href="#">
+                    <i class="lnr lnr lnr-bubble"></i>{{ posts.comment.all.count }}
                     Comments</a>
                 <div class="news_socail ml-auto">
                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -97,7 +104,8 @@
             {% if user.is_authenticated %}
                 <form method="post">
                     {% csrf_token %}
-                    <div class="form-group">
+                    <div class="form-group">\
+                        <input type="hidden" name="comment">
                                 <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege"
                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
                                           required=""></textarea>

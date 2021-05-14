@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Like
 from tags.models import Tag
 from comments.models import Comment
 from django.db.models import Q
@@ -36,9 +36,19 @@ def post_data(request):
 def detail_data(request, id):
     posts = Post.objects.get(id=id)
     if request.method == 'POST':
-        text = request.POST.get('text')
-        comment_obj = Comment.objects.create(user=request.user, post=posts, text=text)
-        return redirect('detail_data', posts.id)
+        if 'comment' in request.POST:
+            try:
+                text = request.POST.get('text')
+                comment_obj = Comment.objects.create(user=request.user, post=posts, text=text)
+                return redirect('detail_data', posts.id)
+            except:
+                print("Error")
+        if 'like' in request.POST:
+            try:
+                like = Like.objects.get(user=request.user, post=posts)
+                like.delete()
+            except:
+                Like.objects.create(user=request.user, post=posts)
     return render(request, 'posts/detail.html', {"posts": posts})
 
 
