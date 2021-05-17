@@ -8,7 +8,7 @@
             <div class="user_details">
                 <div class="float-left">
                     {% for tag in posts.tag_set.all %}
-                        <a href="#">{{ tag.title }}</a>
+                        <a href="{% url 'detail_tag' tag.id %}">{{ tag.title }}</a>
                     {% endfor %}
                 </div>
                 <div class="float-right">
@@ -24,14 +24,34 @@
                 </div>
             </div>
             <p>{{ posts.description }}</p>
+            <hr>
+            {% if user.is_authenticated %}
+                <div class="container">
+                    <a href="{% url 'update_data' posts.id %}">
+                        <button class="btn btn-success">Update</button>
+                    </a>
+                    <a href="{% url 'delete_data' posts.id %}">
+                        <button class="btn btn-danger">Delete</button>
+                    </a>
+
+                </div>
+            {% else %}
+            {% endif %}
             <div class="news_d_footer">
                 <form method="post">
                     {% csrf_token %}
                     <input type="hidden" name="like">
-                    <button type="submit">
-                        <i class="lnr lnr lnr-heart"></i>{{ posts.likes_post.all.count }} people like this
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
                     </button>
                 </form>
+                <div class="ml-3">
+                    </i>{{ posts.likes_post.all.count }} people like this
+                </div>
                 <a class="justify-content-center ml-auto" href="#">
                     <i class="lnr lnr lnr-bubble"></i>{{ posts.comment.all.count }}
                     Comments</a>
@@ -92,6 +112,18 @@
                                 </p>
                             </div>
                         </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="like_comment" value="{{ comment.id }}">
+                            <button type="submit" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                            </button>
+                        </form>
+                         </i>{{ comment.likes_comment.all.count }} people like this
                         {#                    <div class="reply-btn">#}
                         {#                        <a href="" class="btn-reply text-uppercase">reply</a>#}
                         {#                    </div>#}
@@ -104,11 +136,11 @@
             {% if user.is_authenticated %}
                 <form method="post">
                     {% csrf_token %}
-                    <div class="form-group">\
+                    <div class="form-group">
                         <input type="hidden" name="comment">
-                                <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege"
-                                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-                                          required=""></textarea>
+                        <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege"
+                                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                                  required=""></textarea>
                     </div>
                     <button type="submit" class="btn btn-success">Send comment</button>
                 </form>

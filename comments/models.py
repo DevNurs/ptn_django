@@ -10,3 +10,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user} -- {self.post.id}"
+
+
+class LikeComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_user')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes_comment')
+
+    def __str__(self):
+        return f"{self.user.username} -- {self.comment.id}"

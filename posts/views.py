@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Post, Like
 from tags.models import Tag
-from comments.models import Comment
+from comments.models import Comment, LikeComment
 from django.db.models import Q
 
 
@@ -49,6 +49,14 @@ def detail_data(request, id):
                 like.delete()
             except:
                 Like.objects.create(user=request.user, post=posts)
+        if 'like_comment' in request.POST:
+            id = int(request.POST.get('like_comment'))
+            comment_object = Comment.objects.get(id=id)
+            try:
+                like = LikeComment.objects.get(user=request.user, comment=comment_object)
+                like.delete()
+            except:
+                LikeComment.objects.create(user=request.user, comment=comment_object)
     return render(request, 'posts/detail.html', {"posts": posts})
 
 
@@ -57,11 +65,19 @@ def update_data(request, id):
         title = request.POST.get('title')
         description = request.POST.get('description')
         file = request.FILES.get('file')
+        tags = request.POST.get('tag')
         post_update = Post.objects.get(id=id)
         post_update.title = title
         post_update.description = description
         post_update.image = file
         post_update.save()
+        if len(tags) != 0:
+            try:
+                tags_get = Tag.objects.get(title=tags)
+                tags_get.posts.add(post_update)
+            except:
+                tags_obj = Tag.objects.create(title=tags)
+                tags_obj.posts.add(post_update)
         return redirect('detail_data', post_update.id)
     return render(request, 'posts/update.html')
 
