@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Comment(models.Model):
     text = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comment')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, related_name='reply_comment', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

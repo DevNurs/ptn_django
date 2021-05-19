@@ -12,6 +12,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_parent(self):
+        return self.comment.filter(parent__isnull=True)
+
     class Meta:
         ordering = ('-id',)
 

@@ -43,6 +43,13 @@ def detail_data(request, id):
                 return redirect('detail_data', posts.id)
             except:
                 print("Error")
+        if 'reply_comment' in request.POST:
+            id = int(request.POST.get('reply_comment'))
+            print(id)
+            comment_object = Comment.objects.get(id=id)
+            text = request.POST.get('text')
+            comment_create = Comment.objects.create(user=request.user, post=posts, text=text, parent=comment_object)
+            return redirect('detail_data', posts.id)
         if 'like' in request.POST:
             try:
                 like = Like.objects.get(user=request.user, post=posts)
